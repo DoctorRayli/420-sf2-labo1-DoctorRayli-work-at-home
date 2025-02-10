@@ -64,6 +64,9 @@ if __name__ == "__main__":
         Gemme(37, "Émeraude", "Be3Al2(SiO3)6", CouleurRGB(0, 255, 0), "Vitreux", False,  8, 2.76, "I"),
     ]
 
+    alliages = []
+
+
     '''liste de collections'''
     collections = [
         Collection(mineraux=[mineraux[19], mineraux[20], mineraux[21], mineraux[22], mineraux[23]], proprietaire="Raymond Li", nom="Dangerous Boys"),
@@ -91,13 +94,13 @@ if __name__ == "__main__":
                 print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(input("Voulez-vous calculer sa masse à partir du volume (1) ou calculer le volume à partir de la masse (2)? "))))
 
             case "4":
-                gagnant, perdant, type_victoire, texte = combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
-                log_combat.append(LogCombat(gagnant, perdant, type_victoire))
+                gagnant, perdant, point_mineral_1, point_mineral_2, texte = combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
+                log_combat.append(LogCombat(gagnant, perdant, point_mineral_1, point_mineral_2))
                 print(texte)
 
             case "5":
-                gagnant, perdant, type_victoire, texte = combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
-                log_combat.append(LogCombat(gagnant, perdant, type_victoire))
+                gagnant, perdant, point_mineral_1, point_mineral_2, texte = combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
+                log_combat.append(LogCombat(gagnant, perdant, point_mineral_1, point_mineral_2))
                 print(texte)
 
             case "6":

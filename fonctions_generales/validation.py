@@ -51,4 +51,7 @@ def validation_collections(collections:list[Collection], collection:str, entree_
         print("Entrée invalide, veuillez réessayer")
 
     return collection_choisie, entree_valide
+
+def validation_alliage():
+    return
        

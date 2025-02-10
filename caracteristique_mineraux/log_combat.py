@@ -4,7 +4,7 @@ class LogCombat:
 
     '''Cette classe décrit un combat selon le gagnant, le perdant et le type de victoire'''
 
-    def __init__(self, gagnant:Mineral, perdant:Mineral, type_de_victoire:str):
+    def __init__(self, gagnant:Mineral, perdant:Mineral, point_gagnant:int, point_perdant:int):
 
         '''
         Fonction qui sert à construire de nouveux objets de classe LogCombat.
@@ -13,7 +13,8 @@ class LogCombat:
 
         self.__gagnant = gagnant
         self.__perdant = perdant
-        self.__type_de_victoire = type_de_victoire
+        self.__point_gagnant = point_gagnant
+        self.__point_perdant = point_perdant
 
     def __str__(self):
         return self.afficher()
@@ -25,11 +26,11 @@ class LogCombat:
         Elle retourne la description du combat sous forme de texte
         '''
 
-        if self.__type_de_victoire != "égalité":
-            text = f"Le {self.__gagnant.get_nom()} a battu le {self.__perdant.get_nom()} car il est {self.__type_de_victoire}"
+        if self.__point_gagnant == self.__point_perdant:
+            text =  f"Il y a une égalité entre le {self.__gagnant.get_nom()} et le {self.__perdant.get_nom()} à {self.__point_gagnant}"
 
         else:
-            text =  f"Il y a une égalité entre le {self.__gagnant.get_nom()} et le {self.__perdant.get_nom()}"
+            text = f"Le {self.__gagnant.get_nom()} a battu le {self.__perdant.get_nom()} car il a un pointage plus élevé de {self.__point_gagnant - self.__point_perdant}"
 
         return text
    
