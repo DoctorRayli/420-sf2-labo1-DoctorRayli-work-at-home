@@ -60,8 +60,6 @@ def combat_de_mineraux(mineral_numero_1:object, mineral_numero_2:object):
                     point_mineral_2 += 20
             
 
-
-
         '''
         if mineral_numero_1.__radioactivite == True and mineral_numero_2.__radioactivite == False:
             return mineral_numero_1, mineral_numero_2, "radioactif", f"\nLe {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) a battu le {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) car il est radioactif"

@@ -4,9 +4,14 @@ from caracteristique_mineraux.mineral import Mineral
 from caracteristique_mineraux.gemme import Gemme
 from caracteristique_mineraux.metal import Metal
 from caracteristique_mineraux import fonctions_mineraux
+from caracteristique_mineraux.log_combat import LogCombat
+
 from caracteristique_collections.collection import Collection
 from caracteristique_collections import fonctions_collections
-from caracteristique_mineraux.log_combat import LogCombat
+
+from combats.combat_mineraux import combat_de_mineraux
+from combats import combat_alliages
+
 from fonctions_generales.menu_principal import menu_principal as menu
 from fonctions_generales.quitter import quitter
 
@@ -86,12 +91,12 @@ if __name__ == "__main__":
                 print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(input("Voulez-vous calculer sa masse à partir du volume (1) ou calculer le volume à partir de la masse (2)? "))))
 
             case "4":
-                gagnant, perdant, type_victoire, texte = Mineral.combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
+                gagnant, perdant, type_victoire, texte = combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
                 log_combat.append(LogCombat(gagnant, perdant, type_victoire))
                 print(texte)
 
             case "5":
-                gagnant, perdant, type_victoire, texte = Mineral.combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
+                gagnant, perdant, type_victoire, texte = combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
                 log_combat.append(LogCombat(gagnant, perdant, type_victoire))
                 print(texte)
 
