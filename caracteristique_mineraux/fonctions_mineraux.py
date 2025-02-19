@@ -1,6 +1,7 @@
 from caracteristique_mineraux.mineral import Mineral
 from caracteristique_mineraux.log_combat import LogCombat
 from fonctions_generales.validation import validation_mineraux as valide_min
+from fonctions_generales.validation import validation_entree_normale as valide_normal
 
 def masse_volume(mineral:Mineral, masse_ou_volume:int) -> str:
 
@@ -22,7 +23,7 @@ def masse_volume(mineral:Mineral, masse_ou_volume:int) -> str:
 
         return f"\nLe {mineral.get_nom()} a une masse de {masse:.3f}g s'il a un volume de {volume:.3f}cm3"
    
-def choix_mineraux(entree_valide:bool, mineraux:list[Mineral]) -> Mineral:
+def choix_mineraux(entree_valide:bool, mineraux:list):
 
     '''
     Cette fonction sert à choisir une minéral parmi celles qui sont existantes
@@ -44,7 +45,7 @@ def voir_combat(log_combat:list[LogCombat]) -> str:
     '''
 
     text = ""
-    nombre_a_voir = int(input(f"\nCombien des combats précédents voulez-vous voir (maximum de {Mineral.nb_combat})? "))
+    nombre_a_voir = int(valide_normal(input(f"\nCombien des combats précédents voulez-vous voir (maximum de {Mineral.nb_combat})? "), "6"))
 
     if 1 <= nombre_a_voir <= Mineral.nb_combat:
         for x in range(Mineral.nb_combat - 1, Mineral.nb_combat - nombre_a_voir - 1, -1):

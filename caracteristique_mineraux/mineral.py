@@ -23,13 +23,27 @@ class Mineral:
         self.__masse_volumique = masse_volumique
 
     def __str__(self) -> str:
-        return self.afficher()
-    
-    def __eq__(self, other:object) -> bool:
-        return self.__nom == other.__nom and self.__formule_chimique == other.__formule_chimique and self.__couleur == other.__couleur and self.__lustre == other.__lustre and self.__radioactivite == other.__radioactivite and self.__durete == other.__durete and self.__masse_volumique == other.__masse_volumique
+        
+        '''
+        Cette fonction permet d'afficher les détails d'un minéral: numero, nom, formule chimique, couleur, masse volumique, dureté
+        Elle retourne les attributs d'un minéral sous forme de texte
+        '''
 
+        text = f"==================== Minéral №{self.__numero} ==================== \nNom: {self.__nom} \nFormule Chimique: {self.__formule_chimique}\nCouleur: ({str(self.__couleur)}) \nDensité: {self.__masse_volumique}g/cm3 \nDureté: {self.__durete} ({self.classement_durete()})"
+
+        if self.__radioactivite == True and type(self) is Mineral:
+            text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
+
+        return text
+    
+    def __eq__(self:object, other:object) -> bool:
+        if self.__nom == other.__nom and self.__formule_chimique == other.__formule_chimique and self.__couleur == other.__couleur and self.__lustre == other.__lustre and self.__radioactivite == other.__radioactivite and self.__durete == other.__durete and self.__masse_volumique == other.__masse_volumique:
+            return True
+        
+        return False 
+    
     def __hash__(self):
-        return 
+        return hash((self.__numero, self.__nom, self.__formule_chimique, self.__couleur, self.__lustre, self.__radioactivite, self.__durete, self.__masse_volumique))
 
     def get_numero(self):
 
@@ -125,20 +139,6 @@ class Mineral:
         else:
             return "très dur"
 
-    def afficher(self) -> str:
-
-        '''
-        Cette fonction permet d'afficher les détails d'un minéral: numero, nom, formule chimique, couleur, masse volumique, dureté
-        Elle retourne les attributs d'un minéral sous forme de texte
-        '''
-
-        text = f"==================== Minéral №{self.__numero} ==================== \nNom: {self.__nom} \nFormule Chimique: {self.__formule_chimique}\nCouleur: ({self.__couleur.description()}) \nDensité: {self.__masse_volumique}g/cm3 \nDureté: {self.__durete} ({self.classement_durete()})"
-
-        if self.__radioactivite == True:
-            text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
-
-        return text
-
     def liste_mineraux(mineraux:list) -> str:
 
         '''
@@ -172,4 +172,34 @@ class Mineral:
         return volume * self.__masse_volumique
    
     def est_precieux(self) -> bool:
-            return False
+        return False
+    
+    def score(self):
+        
+        point_mineral = 0
+
+        point_mineral += self.__durete * 10 + self.__masse_volumique
+
+        if self.__radioactivite == True:
+            point_mineral += 1000
+
+        return point_mineral
+    
+    def combat_de_mineraux(mineral_numero_1:object, mineral_numero_2:object):
+
+        '''
+        Cette fonction détermine le gagnant, le perdant et du pointage d'un combat de 2 minéraux
+        Elle reçoit les deux minéraux
+        Elle retourne le gagnant, le perdant, le type de victoire et un texte affichant les données mentionnées précédemment
+        '''
+
+        Mineral.nb_combat += 1
+
+        if mineral_numero_1.score() > mineral_numero_2.score():
+            return mineral_numero_1, mineral_numero_2, mineral_numero_1.score(), mineral_numero_2.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) a battu le {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) de {mineral_numero_1.score() - mineral_numero_2.score():.3f} points"
+
+        elif mineral_numero_2.score() > mineral_numero_1.score():
+            return mineral_numero_2, mineral_numero_1, mineral_numero_2.score(), mineral_numero_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) a battu le {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) de {mineral_numero_2.score() - mineral_numero_1.score():.3f} points"
+
+        else:
+            return mineral_numero_1, mineral_numero_2, mineral_numero_1.score(), mineral_numero_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) a une force égale au {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) à {mineral_numero_1.score():.3f} points"

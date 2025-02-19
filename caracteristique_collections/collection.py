@@ -16,7 +16,27 @@ class Collection:
         self.__nom = nom
 
     def __str__(self):
-        return self.description()
+        
+        '''
+        Fonction qui retourne une description détaillée d'une collection au choix (nom, propriétaire et minéraux)
+        Il averti l'utilisateur si la collection contient un minéral radioactif
+        Il retourne un texte (la description détaillée)
+        '''
+
+        nb_element_radioactif = 0
+
+        text = f"\nLa collection {self.__nom} appartient à {self.__proprietaire} et elle contient les minéraux: "
+        for x in self.__mineraux:
+            text += f"Mineral № {x.get_numero()}: {x.get_nom()}, "
+
+        for x in self.__mineraux:
+            if x.get_radioactivite() == True:
+                nb_element_radioactif += 1
+               
+        if nb_element_radioactif > 0:
+            text += f"\n========== DANGER! PRÉSENCE DE {nb_element_radioactif} ÉLÉMENTS RADIOACTIFS =========="
+
+        return text
 
     def get_mineraux(self):
 
@@ -45,7 +65,7 @@ class Collection:
 
         return self.__nom
 
-    def ajout_de_mineral(self, mineral:Mineral) -> str:
+    def ajout_de_mineral(self, mineral) -> str:
 
         '''
         Fonction permettant d'ajouter un minéral dans une collection au choix
@@ -61,29 +81,6 @@ class Collection:
        
         else:
             return f"Le {mineral.get_nom()} est déjà présent dans la collection {self.__nom}"
-
-    def description(self) -> str:
-
-        '''
-        Fonction qui retourne une description détaillée d'une collection au choix (nom, propriétaire et minéraux)
-        Il averti l'utilisateur si la collection contient un minéral radioactif
-        Il retourne un texte (la description détaillée)
-        '''
-
-        nb_element_radioactif = 0
-
-        text = f"\nLa collection {self.__nom} appartient à {self.__proprietaire} et elle contient les minéraux: "
-        for x in self.__mineraux:
-            text += f"Mineral № {x.get_numero()}: {x.get_nom()}, "
-
-        for x in self.__mineraux:
-            if x.get_radioactivite() == True:
-                nb_element_radioactif += 1
-               
-        if nb_element_radioactif > 0:
-            text += f"\n========== DANGER! PRÉSENCE DE {nb_element_radioactif} ÉLÉMENTS RADIOACTIFS =========="
-
-        return text
 
     def creation(collections:list, nom:str, proprietaire:str, mineraux:list) -> list:
 
@@ -108,10 +105,8 @@ class Collection:
         plus_puissant = self.__mineraux[0]
 
         for x in range(len(self.__mineraux) - 1):
-            gagnant, perdant, type_victoire, texte = Mineral.combat_de_mineraux(plus_puissant, self.__mineraux[x+1])
-           
-            if gagnant != plus_puissant:
-                plus_puissant = gagnant
+            gagnant, perdant, score_gagnant, score_perdant, texte = Mineral.combat_de_mineraux(plus_puissant, self.__mineraux[x])
+            plus_puissant = gagnant
 
         return f"\nLe {plus_puissant.get_nom()} est le minéral le plus puissant dans la collection {self.__nom}"
    

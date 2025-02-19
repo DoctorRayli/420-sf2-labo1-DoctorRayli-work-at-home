@@ -1,4 +1,5 @@
 import random
+
 from caracteristique_mineraux.couleur import CouleurRGB
 from caracteristique_mineraux.mineral import Mineral
 from caracteristique_mineraux.gemme import Gemme
@@ -9,9 +10,12 @@ from caracteristique_mineraux.log_combat import LogCombat
 from caracteristique_collections.collection import Collection
 from caracteristique_collections import fonctions_collections
 
-from combats.combat_mineraux import combat_de_mineraux
+from caracteristique_alliages.alliage import Alliage
+from caracteristique_alliages import fonctions_alliages
+
 from combats import combat_alliages
 
+from fonctions_generales import validation
 from fonctions_generales.menu_principal import menu_principal as menu
 from fonctions_generales.quitter import quitter
 
@@ -56,21 +60,44 @@ if __name__ == "__main__":
         Metal(29, "Fer", "Fe", CouleurRGB(169, 169, 169), "Métallique", False, 4, 7.8, 1.0e7, 0.25),
         Metal(30, "Argent", "Ag", CouleurRGB(192, 192, 192), "Métallique", False, 2.5, 10.5, 6.3e7, 974),
         Metal(31, "Zinc", "Zn", CouleurRGB(186, 196, 200), "Métallique", False, 2.5, 7.134, 1.66e7, 2.57),
-        Metal(32, "Étain", "Sn", CouleurRGB(205, 205, 205), "Métallique", False, 7, 7.3, 231.9, 2.2e-5),
-        Gemme(numero=33, nom="Grenat", formule_chimique="X3Y2(SiO4)3", couleur=CouleurRGB(r=200, g=0, b=0), lustre="Vitreux", radioactivite=False, durete=7, masse_volumique=4.32, clarte='VSS'),
-        Gemme(34, "Diamant", "C", CouleurRGB(255, 255, 255), "Adamantin", False,  10, 3.52, "IF"),
-        Gemme(35, "Saphir", "Al2O3", CouleurRGB(0, 0, 255), "Vitreux", False,  9, 3.98, "VVS"),
-        Gemme(36, "Rubis", "Al2O3", CouleurRGB(255, 0, 0), "Vitreux", False,  9, 3.98, "SI"),
-        Gemme(37, "Émeraude", "Be3Al2(SiO3)6", CouleurRGB(0, 255, 0), "Vitreux", False,  8, 2.76, "I"),
+        Metal(32, "Plomb", "Pb", CouleurRGB(128, 128, 128), "Métallique", False, 1.5, 11.34, 4.8e6, 2.2),
+        Metal(33, "Antimoine", "Sb", CouleurRGB(192, 192, 192), "Métallique", False, 3, 6.68, 2.5e6, 9.5),
+        Metal(34, "Nickel", "Ni", CouleurRGB(192, 192, 192), "Métallique", False, 4, 8.9, 1.4e7, 18),
+        Metal(35, "Chrome", "Cr", CouleurRGB(192, 192, 192), "Métallique", False, 8.5, 7.19, 7.9e6, 10),
+        Metal(36, "Molybdène", "Mo", CouleurRGB(169, 169, 169), "Métallique", False, 5.5, 10.28, 2e7, 30),
+        Metal(37, "Titane", "Ti", CouleurRGB(192, 192, 192), "Métallique", False, 6, 4.51, 2.4e6, 15),
+        Metal(38, "Vanadium", "V", CouleurRGB(169, 169, 169), "Métallique", False, 6.7, 6.11, 4.9e6, 25),
+        Metal(39, "Magnésium", "Mg", CouleurRGB(169, 169, 169), "Métallique", False, 2.5, 1.74, 2.3e7, 2.5),
+        Metal(40, "Manganèse", "Mn", CouleurRGB(169, 169, 169), "Métallique", False, 6, 7.21, 6.9e6, 1.7),
+        Metal(41, "Étain", "Sn", CouleurRGB(205, 205, 205), "Métallique", False, 7, 7.3, 2.2e5, 23.19),
+        Metal(42, "Uranium", "U", CouleurRGB(169, 169, 169), "Métallique", True, 6, 19.1, 6.9e6, 130),
+        Metal(43, "Californium", "Cf", CouleurRGB(205, 205, 205), "Métallique", True, 5, 15.1, 2.1e6, 27_000_000),
+        Gemme(numero=44, nom="Grenat", formule_chimique="X3Y2(SiO4)3", couleur=CouleurRGB(r=200, g=0, b=0), lustre="Vitreux", radioactivite=False, durete=7, masse_volumique=4.32, clarte='VVS'),
+        Gemme(45, "Diamant", "C", CouleurRGB(255, 255, 255), "Adamantin", False,  10, 3.52, "IF"),
+        Gemme(46, "Saphir", "Al2O3", CouleurRGB(0, 0, 255), "Vitreux", False,  9, 3.98, "VVS"),
+        Gemme(47, "Rubis", "Al2O3", CouleurRGB(255, 0, 0), "Vitreux", False,  9, 3.98, "SI"),
+        Gemme(48, "Émeraude", "Be3Al2(SiO3)6", CouleurRGB(0, 255, 0), "Vitreux", False,  8, 2.76, "I"),
     ]
 
-    alliages = []
-
+    alliages = [
+        Alliage(numero=1, nom="Acier inoxydable (Inox)", metaux={mineraux[28] : 60, mineraux[34] : 25, mineraux[33] : 10, mineraux[35] : 5}),
+        Alliage(2, "Laiton", {mineraux[25] : 70, mineraux[30] : 30}),
+        Alliage(3, "Bronze", {mineraux[25] : 60, mineraux[40] : 30, mineraux[27] : 10}),
+        Alliage(4, "Cupro-nickel", {mineraux[25] : 80, mineraux[33] : 20}),
+        Alliage(5, "Duralumin", {mineraux[27] : 93, mineraux[25] : 5, mineraux[38] : 1, mineraux[39] : 1}),
+        Alliage(6, "Titane grade 5", {mineraux[36] : 90, mineraux[27] : 6, mineraux[37] : 4}),
+        Alliage(7, "Inconel", {mineraux[33] : 70, mineraux[34] : 15, mineraux[28] : 10, mineraux[35] : 5}),
+        Alliage(8, "Monel", {mineraux[33] : 70, mineraux[25] : 30}),
+        Alliage(9, "Plomb-antimoine", {mineraux[31] : 90, mineraux[32] : 10}),
+        Alliage(10, "Soudure", {mineraux[31] : 70, mineraux[40] : 30}),
+        Alliage(11, "Merde Radioactif", {mineraux[41] : 50, mineraux[42] : 50}),
+                ]
 
     '''liste de collections'''
     collections = [
-        Collection(mineraux=[mineraux[19], mineraux[20], mineraux[21], mineraux[22], mineraux[23]], proprietaire="Raymond Li", nom="Dangerous Boys"),
-        Collection([mineraux[24]], "Sébastien Vigneault", "Pastafarisme")
+        Collection(mineraux=[mineraux[19], mineraux[20], mineraux[21], mineraux[22], mineraux[23], mineraux[41], mineraux[42]], proprietaire="Raymond Li", nom="Dangerous Boys"),
+        Collection([mineraux[24]], "Sébastien Vigneault", "Pastafarisme"),
+        Collection([mineraux[43], mineraux[44], mineraux[45], mineraux[46], mineraux[47]], "Rich person", "Roches Précieuses")
     ]
 
     '''liste de combats'''
@@ -88,18 +115,23 @@ if __name__ == "__main__":
                 print(Mineral.liste_mineraux(mineraux))
 
             case "2":
-                print(f"\n{str(fonctions_mineraux.choix_mineraux(entree_valide, mineraux))}")
+                print(f"\n{fonctions_mineraux.choix_mineraux(entree_valide, mineraux)}")
 
             case "3":
-                print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(input("Voulez-vous calculer sa masse à partir du volume (1) ou calculer le volume à partir de la masse (2)? "))))
+                texte, validite = validation.validation_entree_normale(input("Voulez-vous calculer sa masse à partir du volume (1) ou calculer le volume à partir de la masse (2)? "), choix)
+                if validite == True:
+                    print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(texte)))
+                
+                else:
+                    print("Entrée invalide, veuillez réessayer (entrez un 1 ou un 2)")
 
             case "4":
-                gagnant, perdant, point_mineral_1, point_mineral_2, texte = combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
+                gagnant, perdant, point_mineral_1, point_mineral_2, texte = Mineral.combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
                 log_combat.append(LogCombat(gagnant, perdant, point_mineral_1, point_mineral_2))
                 print(texte)
 
             case "5":
-                gagnant, perdant, point_mineral_1, point_mineral_2, texte = combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
+                gagnant, perdant, point_mineral_1, point_mineral_2, texte = Mineral.combat_de_mineraux(mineraux[random.randint(0,len(mineraux) - 1)], mineraux[random.randint(0,len(mineraux) - 1)])
                 log_combat.append(LogCombat(gagnant, perdant, point_mineral_1, point_mineral_2))
                 print(texte)
 
@@ -107,7 +139,7 @@ if __name__ == "__main__":
                 print(fonctions_mineraux.voir_combat(log_combat))
 
             case "7":
-                print(f"{str(fonctions_collections.choix_collection(entree_valide, collections))}")
+                print(f"{fonctions_collections.choix_collection(entree_valide, collections)}")
 
             case "8":
                 print(fonctions_collections.choix_collection(entree_valide, collections).ajout_de_mineral(fonctions_mineraux.choix_mineraux(entree_valide, mineraux)))
@@ -121,8 +153,40 @@ if __name__ == "__main__":
                 print(f"La collection {nom} de {proprietaire} qui contient les minéraux: {[x.get_nom() for x in mineraux_collection]}, à été créée")
 
             case "11":
+                print(Alliage.liste_alliages(alliages))
+
+            case "12":
+                print(f"\n{fonctions_alliages.choix_alliage(entree_valide, alliages)}")
+
+            case "13":
+                metal = fonctions_alliages.choix_metal(entree_valide, mineraux)
+                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous ajouter à l'alliage? "), choix)
+                if validite == True:
+                    print(fonctions_alliages.choix_alliage(entree_valide, alliages).ajout_metal(metal, int(masse)))
+
+                else:
+                    print("Entrée invalide, veuillez réessayer (entrez un chiffre positif)")
+
+            case "14":
+                alliage = fonctions_alliages.choix_alliage(entree_valide, alliages)
+                metal = fonctions_alliages.choix_metal(entree_valide, mineraux)
+                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous ajouter à l'alliage? "), choix)
+
+                if validite == True:
+                    print(alliage.soustrait_metal(metal, int(masse)))
+
+            case "15":
+                pass
+
+            case "16":
+                pass
+
+            case "17":
+                pass
+
+            case "18":
                 programme = quitter(programme)
 
             case _:
                 print("\nCe n'est pas une option, veuillez réessayer")
-               
+ 

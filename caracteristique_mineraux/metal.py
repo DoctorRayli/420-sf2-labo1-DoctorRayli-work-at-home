@@ -19,24 +19,44 @@ class Metal(Mineral):
         return self.__valeur
 
     def __str__(self):
-        return self.afficher()
+        text = super().__str__() 
+        text += f"\nConductivité: {self.get_conductivite()}S/m \nValeur: {self.get_valeur()}$/kg"
+        if self.get_radioactivite() == True:
+            text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
+
+        return text
     
     def __eq__(self, other:object) -> bool:
-        return self.__nom == other.__nom and self.__formule_chimique == other.__formule_chimique and self.__couleur == other.__couleur and self.__lustre == other.__lustre and self.__radioactivite == other.__radioactivite and self.__durete == other.__durete and self.__masse_volumique == other.__masse_volumique and self.__conductivite == other.__conductivite and self.__valeur == other.__valeur
+        if  super().__eq__(other) == True and self.__conductivite == other.__conductivite and self.__valeur == other.__valeur:
+            return True
+        
+        return False
 
     def __hash__(self):
-        return 
+        qualite_mineraux = super().__hash__()
+        return hash((qualite_mineraux, self.__conductivite, self.__valeur))
 
     def est_precieux(self) -> bool:
         if self.__valeur > 50:
             return True
         
         return False
+   
+    def score(self):
+        return super().score() + self.__valeur * 5
     
-    def afficher(self) -> str:
-        text = f"==================== Minéral №{self.get_numero()} ==================== \nNom: {self.get_nom()} \nFormule Chimique: {self.get_formule_chimique()}\nCouleur: ({self.get_couleur().description()}) \nDensité: {self.get_masse_volumique()}g/cm3 \nDureté: {self.get_durete()} ({self.classement_durete()}) \nConductivité: {self.get_conductivite()}S/m \nValeur: {self.get_valeur()}$/kg"
+    def liste_metaux(mineraux:list) -> str:
 
-        if self.get_radioactivite() == True:
-            text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
+        '''
+        Cette fonction permet d'afficher tous les nom et numéro des minéraux
+        Elle reçoit la liste des minéraux
+        Elle retourne le texte affichant le nom et le numéro des minéraux
+        '''
 
+        text = ""
+        for x in mineraux:
+            if type(x) is Metal:
+                text += f"\nMinéral №{x.get_numero()}: {x.get_nom()}"
+       
         return text
+    

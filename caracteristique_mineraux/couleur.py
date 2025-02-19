@@ -13,6 +13,18 @@ class CouleurRGB:
         self.__g = g
         self.__b = b
 
+    def __str__(self):
+        return f"{self.__r:.3f}, {self.__g:.3f}, {self.__b:.3f}"
+
+    def __eq__(self, other):
+        if self.__r == other.__r and self.__g == other.__g and self.__b == other.__b:
+            return True
+        
+        return False
+
+    def __hash__(self):
+        return hash((self.__r, self.__g, self.__b))
+
     def get_r(self):
 
         '''
@@ -39,13 +51,4 @@ class CouleurRGB:
         '''
 
         return self.__b
-
-    def description(self) -> str:
-
-        '''
-        Cette fonction permet d'afficher la description d'une couleur (ses valeurs RGB)
-        Elle retourne les trois valeurs RGB de la couleur sous forme de texte
-        '''
-
-        return f"{self.__r}, {self.__g}, {self.__b}"
    
