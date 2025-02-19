@@ -31,9 +31,16 @@ def validation_entree_normale(texte:str, choix:str):
             trouver = re.search(validation, texte)
             if trouver:
                 return trouver[0], True
-            
-            else:
-                return texte, False
+
+            return texte, False
+        
+        case "14":
+            validation = r"\b[0-9]+\b"
+            trouver = re.search(validation, texte)
+            if trouver:
+                return trouver[0], True
+
+            return texte, False
 
 def validation_mineraux(mineraux:list, mineral:str, entree_valide:bool, type_mineraux:str=""):
 
@@ -134,7 +141,7 @@ def validation_alliage(alliages:list[Alliage], alliage:str, entree_valide:bool):
             entree_valide = True
 
     if entree_valide == False:
-        continuer = re.findall(recherche, input("Votre entrée est invalide, voulez-vous réessayer (1) ou voir la liste des minéraux (2)? "))
+        continuer = re.findall(recherche, input("Votre entrée est invalide, voulez-vous réessayer (1) ou voir la liste des alliages (2)? "))
         alliage_choisi = ""
 
         if  "2" in continuer:

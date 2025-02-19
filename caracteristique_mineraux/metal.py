@@ -20,7 +20,7 @@ class Metal(Mineral):
 
     def __str__(self):
         text = super().__str__() 
-        text += f"\nConductivité: {self.get_conductivite()}S/m \nValeur: {self.get_valeur()}$/kg"
+        text += f"\nConductivité: {self.get_conductivite()}S/m \nValeur: {self.get_valeur()}$/kg \nScore: {self.score():.3f}"
         if self.get_radioactivite() == True:
             text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
 

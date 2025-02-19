@@ -15,7 +15,7 @@ def choix_alliage(entree_valide:bool, alliages:list[Alliage]) -> Alliage:
 
     return alliage
 
-def choix_metal(entree_valide:bool, mineraux:list):
+def choix_metal(entree_valide:bool, mineraux:list, alliage="", soustraire:bool=False):
     
     '''
     Cette fonction sert à choisir une minéral parmi celles qui sont existantes
@@ -24,6 +24,6 @@ def choix_metal(entree_valide:bool, mineraux:list):
     '''
 
     while entree_valide == False:
-        metal, entree_valide = valide_min(mineraux, input("\nQuel est le métal que vous voulez choisir (veuillez inscrire le numéro du métal): ").lower(), entree_valide, "métal")
+        metal, entree_valide = valide_min(mineraux, input("\nQuel est le métal que vous voulez choisir (veuillez inscrire le numéro du métal): ").lower(), entree_valide, "métal")        
 
     return metal

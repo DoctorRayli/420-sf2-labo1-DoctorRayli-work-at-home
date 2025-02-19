@@ -104,8 +104,8 @@ class Collection:
 
         plus_puissant = self.__mineraux[0]
 
-        for x in range(len(self.__mineraux) - 1):
-            gagnant, perdant, score_gagnant, score_perdant, texte = Mineral.combat_de_mineraux(plus_puissant, self.__mineraux[x])
+        for x in range(len(self.__mineraux)):
+            gagnant, perdant, score_gagnant, score_perdant, texte = Mineral.combat_de_mineraux(plus_puissant, self.__mineraux[x-1])
             plus_puissant = gagnant
 
         return f"\nLe {plus_puissant.get_nom()} est le minéral le plus puissant dans la collection {self.__nom}"

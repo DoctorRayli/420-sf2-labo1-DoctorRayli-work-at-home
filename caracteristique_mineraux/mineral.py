@@ -31,6 +31,9 @@ class Mineral:
 
         text = f"==================== Minéral №{self.__numero} ==================== \nNom: {self.__nom} \nFormule Chimique: {self.__formule_chimique}\nCouleur: ({str(self.__couleur)}) \nDensité: {self.__masse_volumique}g/cm3 \nDureté: {self.__durete} ({self.classement_durete()})"
 
+        if type(self) is Mineral:
+            text += f"\nScore: {self.score():.3f}"
+
         if self.__radioactivite == True and type(self) is Mineral:
             text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
 

@@ -159,21 +159,34 @@ if __name__ == "__main__":
                 print(f"\n{fonctions_alliages.choix_alliage(entree_valide, alliages)}")
 
             case "13":
-                metal = fonctions_alliages.choix_metal(entree_valide, mineraux)
-                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous ajouter à l'alliage? "), choix)
-                if validite == True:
-                    print(fonctions_alliages.choix_alliage(entree_valide, alliages).ajout_metal(metal, int(masse)))
-
-                else:
-                    print("Entrée invalide, veuillez réessayer (entrez un chiffre positif)")
-
-            case "14":
                 alliage = fonctions_alliages.choix_alliage(entree_valide, alliages)
                 metal = fonctions_alliages.choix_metal(entree_valide, mineraux)
                 masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous ajouter à l'alliage? "), choix)
-
+                
                 if validite == True:
+                    print(alliage.ajout_metal(metal, int(masse)))
+
+                else:
+                    print("Entrée invalide, veuillez réessayer")
+
+            case "14":
+                alliage = fonctions_alliages.choix_alliage(entree_valide, alliages)
+
+                while entree_valide == False:
+                    print(f"{Alliage.afficher_metaux(alliage)}")
+                    metal = fonctions_alliages.choix_metal(entree_valide, mineraux, alliage, True)
+                    entree_valide = Alliage.est_present_dans_alliage(alliage, metal)
+
+                    if entree_valide == False:
+                        print("Entrée invalide, veuillez réessayer")
+
+                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous soustraire à l'alliage (maximum {alliage.get_metaux()[metal]}g)? "), choix)
+
+                if validite == True and 0 < int(masse) <= alliage.get_metaux()[metal]:
                     print(alliage.soustrait_metal(metal, int(masse)))
+
+                else:
+                    print("Entrée invalide, veuillez réessayer (entrez un chiffre plus petit ou égal à la masse maximum)")
 
             case "15":
                 pass

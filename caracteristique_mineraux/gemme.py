@@ -16,7 +16,7 @@ class Gemme(Mineral):
     
     def __str__(self) -> str:
         text = super().__str__()
-        text += f"\nClarté: {self.get_clarte()} ({self.classement_clarte()})"
+        text += f"\nClarté: {self.get_clarte()} ({self.classement_clarte()}) \nScore: {self.score():.3f}"
         if self.get_radioactivite() == True:
             text += "\n========== DANGER! ÉLÉMENT RADIOACTIF =========="
 
