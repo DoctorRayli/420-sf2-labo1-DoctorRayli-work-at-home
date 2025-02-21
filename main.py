@@ -13,8 +13,6 @@ from caracteristique_collections import fonctions_collections
 from caracteristique_alliages.alliage import Alliage
 from caracteristique_alliages import fonctions_alliages
 
-from combats import combat_alliages
-
 from fonctions_generales import validation
 from fonctions_generales.menu_principal import menu_principal as menu
 from fonctions_generales.quitter import quitter
@@ -79,6 +77,7 @@ if __name__ == "__main__":
         Gemme(48, "Émeraude", "Be3Al2(SiO3)6", CouleurRGB(0, 255, 0), "Vitreux", False,  8, 2.76, "I"),
     ]
 
+    '''liste d'alliages'''
     alliages = [
         Alliage(numero=1, nom="Acier inoxydable (Inox)", metaux={mineraux[28] : 60, mineraux[34] : 25, mineraux[33] : 10, mineraux[35] : 5}),
         Alliage(2, "Laiton", {mineraux[25] : 70, mineraux[30] : 30}),
@@ -118,12 +117,7 @@ if __name__ == "__main__":
                 print(f"\n{fonctions_mineraux.choix_mineraux(entree_valide, mineraux)}")
 
             case "3":
-                texte, validite = validation.validation_entree_normale(input("Voulez-vous calculer sa masse à partir du volume (1) ou calculer le volume à partir de la masse (2)? "), choix)
-                if validite == True:
-                    print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(texte)))
-                
-                else:
-                    print("Entrée invalide, veuillez réessayer (entrez un 1 ou un 2)")
+                print(fonctions_mineraux.masse_volume(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), int(validation.choix_utilisateur(entree_valide, choix))))
 
             case "4":
                 gagnant, perdant, point_mineral_1, point_mineral_2, texte = Mineral.combat_de_mineraux(fonctions_mineraux.choix_mineraux(entree_valide, mineraux), fonctions_mineraux.choix_mineraux(entree_valide, mineraux))
@@ -136,7 +130,7 @@ if __name__ == "__main__":
                 print(texte)
 
             case "6":
-                print(fonctions_mineraux.voir_combat(log_combat))
+                print(fonctions_mineraux.voir_combat(entree_valide, log_combat))
 
             case "7":
                 print(f"{fonctions_collections.choix_collection(entree_valide, collections)}")
@@ -159,43 +153,37 @@ if __name__ == "__main__":
                 print(f"\n{fonctions_alliages.choix_alliage(entree_valide, alliages)}")
 
             case "13":
-                alliage = fonctions_alliages.choix_alliage(entree_valide, alliages)
-                metal = fonctions_alliages.choix_metal(entree_valide, mineraux)
-                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous ajouter à l'alliage? "), choix)
-                
-                if validite == True:
-                    print(alliage.ajout_metal(metal, int(masse)))
-
-                else:
-                    print("Entrée invalide, veuillez réessayer")
+                print(fonctions_alliages.choix_alliage(entree_valide, alliages).ajout_metal(fonctions_mineraux.choix_metal(entree_valide, mineraux), int(validation.choix_utilisateur(entree_valide, choix))))
 
             case "14":
                 alliage = fonctions_alliages.choix_alliage(entree_valide, alliages)
 
                 while entree_valide == False:
                     print(f"{Alliage.afficher_metaux(alliage)}")
-                    metal = fonctions_alliages.choix_metal(entree_valide, mineraux, alliage, True)
+                    metal = fonctions_mineraux.choix_metal(entree_valide, mineraux)
                     entree_valide = Alliage.est_present_dans_alliage(alliage, metal)
 
                     if entree_valide == False:
                         print("Entrée invalide, veuillez réessayer")
 
-                masse, validite = validation.validation_entree_normale(input(f"Combien de grammes de {metal.get_nom()} voulez-vous soustraire à l'alliage (maximum {alliage.get_metaux()[metal]}g)? "), choix)
-
-                if validite == True and 0 < int(masse) <= alliage.get_metaux()[metal]:
-                    print(alliage.soustrait_metal(metal, int(masse)))
-
-                else:
-                    print("Entrée invalide, veuillez réessayer (entrez un chiffre plus petit ou égal à la masse maximum)")
+                entree_valide = False
+                masse = validation.choix_utilisateur(False, choix, metal, alliage)
+                print(alliage.soustrait_metal(metal, int(masse)))
 
             case "15":
-                pass
+                nom, metaux_alliage = fonctions_alliages.collect_information_alliage(mineraux)
+                alliages = Alliage.creation(alliages, nom, metaux_alliage)
+                print(f"La collection {nom} de {proprietaire} qui contient les minéraux: {[x.get_nom() for x in mineraux_collection]}, à été créée")
 
             case "16":
-                pass
+                gagnant, perdant, point_gagnant, point_perdant, texte = Mineral.combat_de_mineraux(fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix), fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix))
+                log_combat.append(LogCombat(gagnant, perdant, point_gagnant, point_perdant))
+                print(texte)
 
             case "17":
-                pass
+                gagnant, perdant, point_gagnant, point_perdant, texte = Mineral.combat_de_mineraux(fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix, True), fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix, True))
+                log_combat.append(LogCombat(gagnant, perdant, point_gagnant, point_perdant))
+                print(texte)
 
             case "18":
                 programme = quitter(programme)

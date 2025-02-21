@@ -1,10 +1,12 @@
 from caracteristique_mineraux.mineral import Mineral
+from caracteristique_mineraux.gemme import Gemme
+from caracteristique_mineraux.metal import Metal
 
 class Collection:
 
     '''Cette classe décrit une collection selon son nom, son propriétaire et sa liste de minéraux'''
 
-    def __init__(self, mineraux:list, proprietaire:str, nom:str):
+    def __init__(self, mineraux:list[Mineral|Metal|Gemme], proprietaire:str, nom:str):
 
         '''
         Fonction qui sert à construire de nouveux objets de classe Collection.
@@ -15,10 +17,10 @@ class Collection:
         self.__proprietaire = proprietaire
         self.__nom = nom
 
-    def __str__(self):
+    def __str__(self) -> str:
         
         '''
-        Fonction qui retourne une description détaillée d'une collection au choix (nom, propriétaire et minéraux)
+        Fonction qui redéfini la méthode spéciale 'str' qui permet maintenant de retourner une description détaillée d'une collection au choix (nom, propriétaire et minéraux)
         Il averti l'utilisateur si la collection contient un minéral radioactif
         Il retourne un texte (la description détaillée)
         '''
@@ -27,7 +29,7 @@ class Collection:
 
         text = f"\nLa collection {self.__nom} appartient à {self.__proprietaire} et elle contient les minéraux: "
         for x in self.__mineraux:
-            text += f"Mineral № {x.get_numero()}: {x.get_nom()}, "
+            text += f"\nMineral № {x.get_numero()}: {x.get_nom()}"
 
         for x in self.__mineraux:
             if x.get_radioactivite() == True:
@@ -38,7 +40,7 @@ class Collection:
 
         return text
 
-    def get_mineraux(self):
+    def get_mineraux(self) -> list[Mineral|Metal|Gemme]:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut minéraux d'un objet Collection
@@ -47,7 +49,7 @@ class Collection:
 
         return self.__mineraux
    
-    def get_proprietaire(self):
+    def get_proprietaire(self) -> str:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut propriétaire d'un objet Collection
@@ -56,7 +58,7 @@ class Collection:
 
         return self.__proprietaire
    
-    def get_nom(self):
+    def get_nom(self) -> str:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut nom d'un objet Collection
@@ -65,7 +67,7 @@ class Collection:
 
         return self.__nom
 
-    def ajout_de_mineral(self, mineral) -> str:
+    def ajout_de_mineral(self, mineral:Mineral|Gemme|Metal) -> str:
 
         '''
         Fonction permettant d'ajouter un minéral dans une collection au choix
@@ -82,7 +84,7 @@ class Collection:
         else:
             return f"Le {mineral.get_nom()} est déjà présent dans la collection {self.__nom}"
 
-    def creation(collections:list, nom:str, proprietaire:str, mineraux:list) -> list:
+    def creation(collections:list, nom:str, proprietaire:str, mineraux:list[Mineral|Metal|Gemme]) -> list:
 
         '''
         Fonction permettant à l'utilisateur de créer sa propre collection en appelant la fonction __init__
@@ -95,7 +97,7 @@ class Collection:
         collections.append(Collection(mineraux, proprietaire, nom))
         return collections
    
-    def plus_grande_puissance(self):
+    def plus_grande_puissance(self) -> str:
 
         '''
         Cette fonction permet à l'utilisateur de déterminer le minéral le plus puissant d'une collection
@@ -108,5 +110,5 @@ class Collection:
             gagnant, perdant, score_gagnant, score_perdant, texte = Mineral.combat_de_mineraux(plus_puissant, self.__mineraux[x-1])
             plus_puissant = gagnant
 
-        return f"\nLe {plus_puissant.get_nom()} est le minéral le plus puissant dans la collection {self.__nom}"
+        return f"\nLe {plus_puissant.get_nom()} est le minéral le plus puissant dans la collection {self.__nom} avec un score de {plus_puissant.score():.3f}"
    

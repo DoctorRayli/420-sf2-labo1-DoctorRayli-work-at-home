@@ -1,10 +1,12 @@
 from caracteristique_mineraux.mineral import Mineral
+from caracteristique_mineraux.metal import Metal
+from caracteristique_mineraux.gemme import Gemme
 
 class LogCombat:
 
     '''Cette classe décrit un combat selon le gagnant, le perdant et le type de victoire'''
 
-    def __init__(self, gagnant:Mineral, perdant:Mineral, point_gagnant:int, point_perdant:int):
+    def __init__(self, gagnant:Mineral|Metal|Gemme, perdant:Mineral|Metal|Gemme, point_gagnant:int, point_perdant:int):
 
         '''
         Fonction qui sert à construire de nouveux objets de classe LogCombat.
@@ -16,10 +18,10 @@ class LogCombat:
         self.__point_gagnant = point_gagnant
         self.__point_perdant = point_perdant
 
-    def __str__(self):
+    def __str__(self) -> str:
         
         '''
-        Cette fonction permet d'afficher la description d'un combat: le gagnant, perdant et le type de victoire
+        Cette fonction permet redéfini la méthode spéciale 'str' qui permet maintenant d'afficher la description d'un combat: le gagnant, perdant et le type de victoire
         Elle retourne la description du combat sous forme de texte
         '''
 

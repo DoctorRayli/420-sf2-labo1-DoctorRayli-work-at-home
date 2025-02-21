@@ -25,7 +25,7 @@ class Mineral:
     def __str__(self) -> str:
         
         '''
-        Cette fonction permet d'afficher les détails d'un minéral: numero, nom, formule chimique, couleur, masse volumique, dureté
+        Cette fonction redéfini la méthode spéciale 'str' qui permet maintenant d'afficher les détails d'un minéral: numero, nom, formule chimique, couleur, masse volumique, dureté
         Elle retourne les attributs d'un minéral sous forme de texte
         '''
 
@@ -39,16 +39,28 @@ class Mineral:
 
         return text
     
-    def __eq__(self:object, other:object) -> bool:
+    def __eq__(self, other:object) -> bool:
+
+        '''
+        Cette fonction redéfini la méthode spéciale '=='
+        Elle retourne une valeur booléenne confirmant l'égalité ou non de deux objet de type Minéral
+        '''
+
         if self.__nom == other.__nom and self.__formule_chimique == other.__formule_chimique and self.__couleur == other.__couleur and self.__lustre == other.__lustre and self.__radioactivite == other.__radioactivite and self.__durete == other.__durete and self.__masse_volumique == other.__masse_volumique:
             return True
         
         return False 
     
-    def __hash__(self):
+    def __hash__(self) -> int:
+
+        '''
+        Cette fonction redéfini la méthode spéciale 'hash()'
+        Elle retourne un hash déterminé par les attributs d'un object de type Minéral
+        '''
+
         return hash((self.__numero, self.__nom, self.__formule_chimique, self.__couleur, self.__lustre, self.__radioactivite, self.__durete, self.__masse_volumique))
 
-    def get_numero(self):
+    def get_numero(self) -> int:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut numero d'un objet Mineral
@@ -57,7 +69,7 @@ class Mineral:
 
         return self.__numero
    
-    def get_nom(self):
+    def get_nom(self) -> str:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut nom d'un objet Mineral
@@ -66,7 +78,7 @@ class Mineral:
          
         return self.__nom
 
-    def get_formule_chimique(self):
+    def get_formule_chimique(self) -> str:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut formule chimique d'un objet Mineral
@@ -75,7 +87,7 @@ class Mineral:
 
         return self.__formule_chimique
    
-    def get_couleur(self):
+    def get_couleur(self) -> CouleurRGB:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut couleur d'un objet Mineral
@@ -84,7 +96,7 @@ class Mineral:
 
         return self.__couleur
    
-    def get_lustre(self):
+    def get_lustre(self) -> str:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut lustre d'un objet Mineral
@@ -93,7 +105,7 @@ class Mineral:
 
         return self.__lustre
    
-    def get_radioactivite(self):
+    def get_radioactivite(self) -> bool:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut radioactivité d'un objet Mineral
@@ -102,7 +114,7 @@ class Mineral:
 
         return self.__radioactivite
    
-    def get_durete(self):
+    def get_durete(self) -> float:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut dureté d'un objet Mineral
@@ -111,7 +123,7 @@ class Mineral:
 
         return self.__durete
    
-    def get_masse_volumique(self):
+    def get_masse_volumique(self) -> float:
 
         '''
         Fonction d'encapsulation qui sert à permettre l'accès à l'attribut masse volumique d'un objet Mineral
@@ -156,7 +168,7 @@ class Mineral:
        
         return text
 
-    def masse_a_volume(self, masse) -> float:
+    def masse_a_volume(self, masse:float) -> float:
 
         '''
         Cette fonction calcul le volume d'un minéral à partir de leur masse
@@ -165,7 +177,7 @@ class Mineral:
 
         return masse / self.__masse_volumique
    
-    def volume_a_masse(self, volume) -> float:
+    def volume_a_masse(self, volume:float) -> float:
 
         '''
         Cette fonction calcul la masse d'un minéral à partir de leur volume
@@ -175,12 +187,22 @@ class Mineral:
         return volume * self.__masse_volumique
    
     def est_precieux(self) -> bool:
+
+        '''
+        Cette fonction détermine si une gemme est précieuse
+        Elle retourne que non, un minéral n'est pas précieuse
+        '''
+
         return False
     
-    def score(self):
+    def score(self) -> float:
+
+        '''
+        Cette fonction permet de calculer le score(puissance) d'un minéral
+        Elle retourne le score du minéral
+        '''
         
         point_mineral = 0
-
         point_mineral += self.__durete * 10 + self.__masse_volumique
 
         if self.__radioactivite == True:
@@ -188,21 +210,21 @@ class Mineral:
 
         return point_mineral
     
-    def combat_de_mineraux(mineral_numero_1:object, mineral_numero_2:object):
+    def combat_de_mineraux(combattant_1:object, combattant_2:object) -> tuple[object, object, float, float, str]:
 
         '''
-        Cette fonction détermine le gagnant, le perdant et du pointage d'un combat de 2 minéraux
+        Cette fonction détermine le gagnant, le perdant et du pointage d'un combat de 2 minéraux ou alliages
         Elle reçoit les deux minéraux
         Elle retourne le gagnant, le perdant, le type de victoire et un texte affichant les données mentionnées précédemment
         '''
 
         Mineral.nb_combat += 1
 
-        if mineral_numero_1.score() > mineral_numero_2.score():
-            return mineral_numero_1, mineral_numero_2, mineral_numero_1.score(), mineral_numero_2.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) a battu le {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) de {mineral_numero_1.score() - mineral_numero_2.score():.3f} points"
+        if combattant_1.score() > combattant_2.score():
+            return combattant_1, combattant_2, combattant_1.score(), combattant_2.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {combattant_1.get_nom()} ({combattant_1.get_numero()}) a battu le {combattant_2.get_nom()} ({combattant_2.get_numero()}) de {combattant_1.score() - combattant_2.score():.3f} points"
 
-        elif mineral_numero_2.score() > mineral_numero_1.score():
-            return mineral_numero_2, mineral_numero_1, mineral_numero_2.score(), mineral_numero_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) a battu le {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) de {mineral_numero_2.score() - mineral_numero_1.score():.3f} points"
+        elif combattant_2.score() > combattant_1.score():
+            return combattant_2, combattant_1, combattant_2.score(), combattant_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {combattant_2.get_nom()} ({combattant_2.get_numero()}) a battu le {combattant_1.get_nom()} ({combattant_1.get_numero()}) de {combattant_2.score() - combattant_1.score():.3f} points"
 
         else:
-            return mineral_numero_1, mineral_numero_2, mineral_numero_1.score(), mineral_numero_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {mineral_numero_1.get_nom()} ({mineral_numero_1.get_numero()}) a une force égale au {mineral_numero_2.get_nom()} ({mineral_numero_2.get_numero()}) à {mineral_numero_1.score():.3f} points"
+            return combattant_1, combattant_2, combattant_1.score(), combattant_1.score(), f"\n==========Combat №{Mineral.nb_combat}==========\nLe {combattant_1.get_nom()} ({combattant_1.get_numero()}) a une force égale au {combattant_2.get_nom()} ({combattant_2.get_numero()}) à {combattant_1.score():.3f} points"
