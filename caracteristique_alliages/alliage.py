@@ -186,11 +186,7 @@ class Alliage:
 
         for x in metaux:
             r += x.get_couleur().get_r() * Alliage.proportion_metal(metaux[x], metaux)
-
-        for x in metaux:
             g += x.get_couleur().get_g() * Alliage.proportion_metal(metaux[x], metaux)
-
-        for x in metaux:
             b += x.get_couleur().get_b() * Alliage.proportion_metal(metaux[x], metaux)
         
         return CouleurRGB(r, g, b)
