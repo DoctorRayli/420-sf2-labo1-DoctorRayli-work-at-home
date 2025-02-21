@@ -12,7 +12,7 @@ def quitter(programme:bool) -> bool:
         print("Option invalide, mais nous allons assumer que vous voulez arrêter")
         programme = False
 
-    elif quitter == "non":
+    elif quitter == "oui":
         programme = False
 
     return programme

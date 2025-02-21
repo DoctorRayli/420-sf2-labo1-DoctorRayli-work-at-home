@@ -37,7 +37,7 @@ def collect_information_collection(mineraux:list[Mineral|Metal|Gemme]) -> tuple[
     proprietaire = input("Qui possède la collection: ")
     mineraux_collection = []
 
-    print(f"Parmi les minnéraux suivants:\n{Mineral.liste_mineraux()}")
+    print(f"Parmi les minéraux suivants:\n{Mineral.liste_mineraux(mineraux)}")
     lst_mineraux = input("Quels mineraux voulez-vous ajouter à cette collection (veuillez inscrire les numéros de tous les minéraux): ").replace(",", " ").split()
                
     for x in lst_mineraux:

@@ -1,4 +1,5 @@
 import random
+import re
 from caracteristique_mineraux.metal import Metal
 from caracteristique_mineraux.mineral import Mineral
 from caracteristique_mineraux.gemme import Gemme
@@ -61,15 +62,25 @@ def collect_information_alliage(mineraux:list[Mineral|Metal|Gemme]) -> tuple[str
     metaux_alliage = {}
 
     while len(metaux_alliage) == 0:
-        print(f"Parmi les métaux suivants: {Metal.liste_metaux()}")
+        print(f"Parmi les métaux suivants: {Metal.liste_metaux(mineraux)}")
         lst_metaux = input("Quels métaux voulez-vous ajouter à cet alliage (veuillez inscrire les numéros de tous les minéraux): ").replace(",", " ").split()     
         for x in lst_metaux:
             if x.isalpha() == False:
-                if 25 <= int(x) <= 42 and mineraux[int(x) - 1] not in metaux_alliage.keys():
-                    masse = input(f"Combien de gramme de {mineraux[int(x) - 1].get_nom()} voulez-vous ajouter à votre alliage")
-                    metaux_alliage[mineraux[int(x) - 1]] = int(masse)
+                if 26 <= int(x) <= 43 and mineraux[int(x) - 1] not in metaux_alliage.keys():
+                    masse = input(f"Combien de grammes de {mineraux[int(x) - 1].get_nom()} voulez-vous ajouter à votre alliage? ")
+                    validite = re.search(r"[0-9]+", masse)
+
+                    if validite:
+                        if validite[0].isnumeric() == True:
+                            metaux_alliage[mineraux[int(x) - 1]] = int(validite[0])
+
+                        else:
+                            print(f"Entrée invalide, nous allons considérer que vous avez mis 0g de {mineraux[int(x) - 1].get_nom()}")
+
+                    else:
+                        print(f"Entrée invalide, nous allons considérer que vous avez mis 0g de {mineraux[int(x) - 1].get_nom()}")
         
         if len(metaux_alliage) == 0:
-            print(f"\nEntrez invalide, vous devez choisir au moins un métal parmi ceux-ci:\n{Metal.liste_metaux()}")
+            print(f"\nEntrez invalide, vous devez choisir au moins un métal parmi ceux-ci:\n{Metal.liste_metaux(mineraux)}")
 
     return nom_capitalise, metaux_alliage

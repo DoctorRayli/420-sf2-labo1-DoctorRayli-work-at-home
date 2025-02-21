@@ -16,24 +16,6 @@ class Metal(Mineral):
         self.__conductivite = conductivite
         self.__valeur = valeur
 
-    def get_conductivite(self) -> float:
-
-        '''
-        Fonction d'encapsulation qui sert à permettre l'accès à l'attribut conductivité d'un objet Métal
-        Il retourne le conductivité du métal
-        '''
-
-        return self.__conductivite
-    
-    def get_valeur(self) -> float:
-
-        '''
-        Fonction d'encapsulation qui sert à permettre l'accès à l'attribut valeur d'un objet Métal
-        Il retourne la valeur du métal
-        '''
-
-        return self.__valeur
-
     def __str__(self) -> str:
 
         '''
@@ -68,7 +50,25 @@ class Metal(Mineral):
         '''
 
         qualite_mineraux = super().__hash__()
-        return hash((qualite_mineraux, self.__conductivite, self.__valeur))
+        return hash((qualite_mineraux, self.__conductivite, self.__valeur))    
+
+    def get_conductivite(self) -> float:
+
+        '''
+        Fonction d'encapsulation qui sert à permettre l'accès à l'attribut conductivité d'un objet Métal
+        Il retourne le conductivité du métal
+        '''
+
+        return self.__conductivite
+    
+    def get_valeur(self) -> float:
+
+        '''
+        Fonction d'encapsulation qui sert à permettre l'accès à l'attribut valeur d'un objet Métal
+        Il retourne la valeur du métal
+        '''
+
+        return self.__valeur
 
     def est_precieux(self) -> bool:
 

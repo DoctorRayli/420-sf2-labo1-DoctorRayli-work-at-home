@@ -1,5 +1,4 @@
 from caracteristique_mineraux.metal import Metal
-from caracteristique_mineraux.mineral import Mineral
 from caracteristique_mineraux.couleur import CouleurRGB
 
 class Alliage:
@@ -33,7 +32,7 @@ class Alliage:
 
         nb_element_radioactif = 0
 
-        text = f"==================== Alliage №{self.__numero} ==================== \nNom: {self.__nom} \nCouleur: ({str(self.__couleur)}) \nDensité: {self.__masse_volumique:.3f}g/cm3 \nDureté: {self.__durete:.3f} ({self.classement_durete()}) \nConductivité: ({self.__conductivite[0]} à {self.__conductivite[1]}) S/m \nValeur: {self.__valeur}$/kg \nScore: {self.score():.3f} \nMétaux: "
+        text = f"==================== Alliage №{self.__numero} ==================== \nNom: {self.__nom} \nCouleur: ({str(self.__couleur)}) \nDensité: {self.__masse_volumique:.3f}g/cm3 \nDureté: {self.__durete:.3f} ({self.classement_durete()}) \nConductivité: ({self.__conductivite[0]:.3f} à {self.__conductivite[1]:.3f})S/m \nValeur: {self.__valeur:.3f}$/kg \nScore: {self.score():.3f} \nMétaux: "
         for x in self.__metaux:
             text += f"Métal № {x.get_numero()}: {x.get_nom()} ({Alliage.proportion_metal(self.__metaux[x], self.__metaux) * 100:.3f}%), "
 

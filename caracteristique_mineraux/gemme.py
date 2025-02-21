@@ -114,7 +114,7 @@ class Gemme(Mineral):
 
         return super().score() + point_mineral
     
-    def liste_gemme(mineraux:list) -> str:
+    def liste_gemmes(mineraux:list) -> str:
 
         '''
         Cette fonction permet d'afficher tous les nom et numéro des gemmes

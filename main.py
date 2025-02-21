@@ -173,14 +173,20 @@ if __name__ == "__main__":
             case "15":
                 nom, metaux_alliage = fonctions_alliages.collect_information_alliage(mineraux)
                 alliages = Alliage.creation(alliages, nom, metaux_alliage)
-                print(f"La collection {nom} de {proprietaire} qui contient les minéraux: {[x.get_nom() for x in mineraux_collection]}, à été créée")
+                print(f"L'alliage {nom} de qui contient les métaux: {[x.get_nom() for x in metaux_alliage]}, à été créée")
 
             case "16":
+
+                '''Pour le combat alliages-métaux, j'ai juste décidé de faire le même système de pointage que les minéraux, gemmes ou métaux'''
+
                 gagnant, perdant, point_gagnant, point_perdant, texte = Mineral.combat_de_mineraux(fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix), fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix))
                 log_combat.append(LogCombat(gagnant, perdant, point_gagnant, point_perdant))
                 print(texte)
 
             case "17":
+
+                '''Pour le combat alliages-métaux, j'ai juste décidé de faire le même système de pointage que les minéraux, gemmes ou métaux'''
+
                 gagnant, perdant, point_gagnant, point_perdant, texte = Mineral.combat_de_mineraux(fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix, True), fonctions_alliages.choix_combattant(entree_valide, mineraux, alliages, choix, True))
                 log_combat.append(LogCombat(gagnant, perdant, point_gagnant, point_perdant))
                 print(texte)

@@ -20,7 +20,7 @@ def menu_principal() -> str:
     text += "\n11 - Voir la liste des alliages"
     text += "\n12 - Afficher les détails d'un alliage"
     text += "\n13 - Ajouter un métal à un alliage"
-    text += "\n14 - Soustraire  un métal à un alliage"
+    text += "\n14 - Soustraire un métal à un alliage"
     text += "\n15 - Créer un alliage"
     text += "\n16 - Initier un combat entre deux alliages de votre choix"
     text += "\n17 - Initier un combat entre deux alliages choisi au hasard"
